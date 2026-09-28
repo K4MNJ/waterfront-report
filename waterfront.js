@@ -186,6 +186,10 @@
       return;
     }
     var regId = function (r) { return r.registrationId != null ? r.registrationId : r.id; };
+    // Title (Mr., Mrs., Dr., ...) from the registration, when there is one.
+    var fullName = function (r) {
+      return [r.userTitle, r.firstName, r.lastName].map(function (s) { return (s || "").trim(); }).filter(Boolean).join(" ");
+    };
     var bookers = regs.filter(function (r) { return r.registrantType === "B" && r.linkedRegistrationId == null; });
     var ordered = [];
     bookers.forEach(function (b) {
@@ -203,7 +207,7 @@
     if (NARROW) {
       html = '<div style="background:#f7fafa;border-radius:6px;">';
       ordered.forEach(function (o, idx) {
-        var name = [o.r.firstName, o.r.lastName].filter(Boolean).join(" ");
+        var name = fullName(o.r);
         html +=
           '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;' +
           "padding:8px 10px" + (o.booker ? "" : " 8px 26px") + ";border-top:" + (idx === 0 ? "none" : "1px solid #e6eded") + ';font-size:.95rem;">' +
@@ -222,7 +226,7 @@
         '<th style="text-align:left;padding:4px 6px;font-size:.8rem;color:#555;">Party</th>' +
         '<th style="text-align:left;padding:4px 6px;font-size:.8rem;color:#555;">Phone</th></tr></thead><tbody>';
       ordered.forEach(function (o, idx) {
-        var name = [o.r.firstName, o.r.lastName].filter(Boolean).join(" ");
+        var name = fullName(o.r);
         html +=
           "<tr>" +
           "<td " + td + ">" + (o.booker ? "<strong>" + esc(name) + "</strong>" : '<span style="color:#888;">↳</span> ' + esc(name)) + "</td>" +
