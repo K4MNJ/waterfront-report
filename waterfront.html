@@ -516,5 +516,55 @@
   member profile show &mdash;.
 </div>
 
+<div class="step" id="phone" style="margin-top:30px;">
+  <h2 style="margin-top:0;">Set it up on a phone</h2>
+  <p style="font-size:0.9rem;">Open this page on the phone, copy the bookmark code, then save it as a bookmark in the phone's browser.</p>
+  <button type="button" id="copyBookmarkBtn" style="font:inherit;font-weight:600;width:100%;padding:12px 16px;background:#307D7E;color:#fff;border:none;border-radius:6px;cursor:pointer;">Copy bookmark code</button>
+  <div id="copyBookmarkStatus" role="status" style="font-size:0.85rem;color:#666;min-height:1.4em;margin:6px 0;"></div>
+  <textarea id="bookmarkCode" readonly spellcheck="false" aria-label="Bookmark code" style="width:100%;box-sizing:border-box;height:5.5em;font:12px/1.4 Consolas,Menlo,monospace;background:#eee;border:1px solid #ddd;border-radius:4px;padding:8px;resize:vertical;">javascript:(function()%7Bfetch('https://raw.githubusercontent.com/K4MNJ/waterfront-report/main/waterfront.js',%7Bcache:'no-store'%7D).then(function(r)%7Bif(!r.ok)throw%20new%20Error('HTTP%20'+r.status);return%20r.text()%7D).then(function(s)%7B(0,eval)(s)%7D).catch(function(e)%7Balert('Waterfront%20Trips%20Report%20could%20not%20load:%20'+e.message)%7D)%7D)()</textarea>
+  <div style="font-size:0.85rem;color:#666;">If Copy doesn't work, tap inside the box, choose Select all, then Copy.</div>
+
+  <h3 style="font-size:0.95rem;margin:18px 0 6px;">Android (Chrome)</h3>
+  <ol>
+    <li>Open any page on <code>harbourridge.com</code>. Tap <strong>⋮</strong>, then the <strong>☆</strong> star to bookmark it.</li>
+    <li>Tap <strong>Edit</strong> in the pop-up at the bottom (or <strong>⋮ → Bookmarks</strong>, then the bookmark's <strong>⋮ → Edit</strong>).</li>
+    <li>Name it <strong>Waterfront Trips Report</strong>. Clear the URL field, paste the code, and tap back to save.</li>
+    <li>To run it: on harbourridge.com, type <strong>Waterfront</strong> in the address bar and tap the suggestion with the ☆ icon. Opening it from the Bookmarks list does nothing on Android.</li>
+  </ol>
+
+  <h3 style="font-size:0.95rem;margin:18px 0 6px;">iPhone (Safari)</h3>
+  <ol>
+    <li>Open any page on <code>harbourridge.com</code>. Tap the Share button, then <strong>Add Bookmark</strong>, and save it.</li>
+    <li>Tap the Bookmarks (book) icon, then <strong>Edit</strong>, and tap the new bookmark.</li>
+    <li>Name it <strong>Waterfront Trips Report</strong>. Clear the address field, paste the code, and tap <strong>Done</strong>.</li>
+    <li>To run it: on harbourridge.com, open Bookmarks and tap <strong>Waterfront Trips Report</strong>.</li>
+  </ol>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById("copyBookmarkBtn");
+    var box = document.getElementById("bookmarkCode");
+    var status = document.getElementById("copyBookmarkStatus");
+    function fallback() {
+      box.focus();
+      box.select();
+      box.setSelectionRange(0, box.value.length);
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) {}
+      status.textContent = ok ? "Copied. Now follow the steps for your phone below." : "The code is selected. Tap Copy in your phone's menu.";
+    }
+    btn.addEventListener("click", function () {
+      try {
+        navigator.clipboard.writeText(box.value).then(function () {
+          status.textContent = "Copied. Now follow the steps for your phone below.";
+        }, fallback);
+      } catch (e) {
+        fallback();
+      }
+    });
+  })();
+</script>
+
 </body>
 </html>
