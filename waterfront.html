@@ -87,7 +87,7 @@
       <code>github.com/K4MNJ/waterfront-report</code>, so updates there reach every device without re-adding the bookmark.</li>
   </ol>
   <div class="bookmarklet-wrap">
-    <a class="bookmarklet" href="javascript:(function()%7Bfetch('https://raw.githubusercontent.com/K4MNJ/waterfront-report/main/waterfront.js',%7Bcache:'no-store'%7D).then(function(r)%7Bif(!r.ok)throw%20new%20Error('HTTP%20'+r.status);return%20r.text()%7D).then(function(s)%7B(0,eval)(s)%7D).catch(function(e)%7Balert('Waterfront%20Trips%20Report%20could%20not%20load:%20'+e.message)%7D)%7D)()">📋 Waterfront Trips Report</a>
+    <a class="bookmarklet" href="javascript:(function()%7Bvar%20u=%5B'https://raw.githubusercontent.com/K4MNJ/waterfront-report/main/waterfront.js','https://cdn.jsdelivr.net/gh/K4MNJ/waterfront-report@main/waterfront.js'%5D,i=0,k='hrTripsScript',err=%5B%5D;function%20run(s)%7B(0,eval)(s)%7Dfunction%20next(e)%7Bif(e)err.push(e.message);if(i%3Cu.length)%7Bfetch(u%5Bi++%5D,%7Bcache:'no-store'%7D).then(function(r)%7Bif(!r.ok)throw%20new%20Error(r.url.split('/')%5B2%5D+'%20HTTP%20'+r.status);return%20r.text()%7D).then(function(s)%7Btry%7BlocalStorage.setItem(k,s)%7Dcatch(x)%7B%7Drun(s)%7D,next)%7Delse%7Bvar%20c;try%7Bc=localStorage.getItem(k)%7Dcatch(x)%7B%7Dif(c)run(c);else%20alert('Waterfront%20Trips%20Report%20could%20not%20load:%20'+err.join(';%20'))%7D%7Dnext()%7D)()">📋 Waterfront Trips Report</a>
   </div>
   <div style="font-size:0.85rem;color:#666;text-align:center;">(Drag, don't click &mdash; clicking it now won't do anything useful since this page isn't harbourridge.com.)</div>
 </div>
@@ -107,10 +107,8 @@
 <div class="step">
   <h2 style="margin-top:0;">Alternative: paste into the console</h2>
   <p style="font-size:0.9rem;">If your browser strips bookmarklets or you'd rather not add one, open DevTools on a harbourridge.com
-  tab (<code>F12</code> or <code>Cmd/Ctrl+Option+I</code>), go to the <strong>Console</strong> tab, paste the snippet below, and press Enter. It loads the latest script from GitHub, the same as the bookmark.</p>
-  <pre id="sourceBlock">fetch(&quot;https://raw.githubusercontent.com/K4MNJ/waterfront-report/main/waterfront.js&quot;, { cache: &quot;no-store&quot; })
-  .then(function (r) { if (!r.ok) throw new Error(&quot;HTTP &quot; + r.status); return r.text(); })
-  .then(function (s) { (0, eval)(s); });
+  tab (<code>F12</code> or <code>Cmd/Ctrl+Option+I</code>), go to the <strong>Console</strong> tab, paste the snippet below, and press Enter. It loads the latest script from GitHub, the same as the bookmark. If GitHub is blocked on your network, it tries a mirror, then the last copy saved on this computer.</p>
+  <pre id="sourceBlock">(function(){var u=['https://raw.githubusercontent.com/K4MNJ/waterfront-report/main/waterfront.js','https://cdn.jsdelivr.net/gh/K4MNJ/waterfront-report@main/waterfront.js'],i=0,k='hrTripsScript',err=[];function run(s){(0,eval)(s)}function next(e){if(e)err.push(e.message);if(i&lt;u.length){fetch(u[i++],{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(r.url.split('/')[2]+' HTTP '+r.status);return r.text()}).then(function(s){try{localStorage.setItem(k,s)}catch(x){}run(s)},next)}else{var c;try{c=localStorage.getItem(k)}catch(x){}if(c)run(c);else alert('Waterfront Trips Report could not load: '+err.join('; '))}}next()})()
 </pre>
 </div>
 
